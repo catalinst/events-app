@@ -1,11 +1,11 @@
 import classes from '../styles/EventItem.module.css';
 import Button from "./Button";
-import DateIcon from "./DateIcon";
-import AddressIcon from "./AddressIcon";
-import ArrowRightIcon from "./ArrowRightIcon";
+import DateIcon from "./icons/DateIcon";
+import AddressIcon from "./icons/AddressIcon";
+import ArrowRightIcon from "./icons/ArrowRightIcon";
 
 function EventItem(props) {
-    const { title, image, date, location , id } = props;
+    const { title, image, date, location, id } = props;
 
     const formattedDate = new Date(date).toLocaleDateString('en-US', {
         day: 'numeric',
