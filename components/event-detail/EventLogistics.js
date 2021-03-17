@@ -11,7 +11,7 @@ function EventLogistics(props) {
         month: 'long',
         year: 'numeric',
     });
-    const formattedAddress = address.replace(', ', '\n');
+    const formattedAddress = address.replace(', ', ',\n');
 
     return (
         <section className={classes.logistics}>
