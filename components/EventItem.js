@@ -1,5 +1,5 @@
 import classes from '../styles/EventItem.module.css';
-import Button from "./Button";
+import Button from "./layout/Button";
 import DateIcon from "./icons/DateIcon";
 import AddressIcon from "./icons/AddressIcon";
 import ArrowRightIcon from "./icons/ArrowRightIcon";

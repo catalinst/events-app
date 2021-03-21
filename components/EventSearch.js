@@ -1,5 +1,5 @@
 import classes from '../styles/EventSearch.module.css';
-import Button from "./Button";
+import Button from "./layout/Button";
 import { useRef } from "react";
 
 function EventSearch(props) {
