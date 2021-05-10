@@ -1,25 +1,12 @@
-import { useRouter } from "next/router";
-import { getFilteredEvents } from "../../dummy-data";
+import { getFilteredEvents } from "../../helpers/api-utils";
 import EventList from "../../components/EventList";
 import ResultsTitle from "../../components/layout/ResultsTitle";
 import ErrorAlert from "../../components/layout/ErrorAlert";
 import Button from "../../components/layout/Button";
 
-function FilteredEventsPage() {
-    const router = useRouter();
-    const filterData = router.query['slug'];
+function FilteredEventsPage({ events, hasError, yearNumber, monthNumber }) {
 
-    /*
-    This is needed cause we double render -> first time we have no value for router.query -> error
-     */
-    if (!filterData) {
-        return <p className={'center'}>Loading...</p>
-    }
-
-    const yearNumber = parseInt(filterData[0]);
-    const monthNumber = +filterData[1]; // same as above
-
-    if(isNaN(yearNumber) || isNaN(monthNumber)) {
+    if (hasError) {
         return (
             <div>
                 <ErrorAlert>
@@ -31,8 +18,6 @@ function FilteredEventsPage() {
             </div>
         );
     }
-
-    const events = getFilteredEvents({ year: yearNumber, month: monthNumber });
 
     if (!events || events.length === 0) {
         return (
@@ -55,6 +40,32 @@ function FilteredEventsPage() {
             <EventList list={events} />
         </div>
     );
+}
+
+export async function getServerSideProps(context) {
+    const { params } = context;
+    const filterData = params['slug'];
+
+    const yearNumber = parseInt(filterData[0]);
+    const monthNumber = +filterData[1]; // same as above
+
+    if (isNaN(yearNumber) || isNaN(monthNumber)) {
+        return {
+            props: {
+                hasError: true
+            }
+        }
+    }
+
+    const events = await getFilteredEvents({ year: yearNumber, month: monthNumber });
+
+    return {
+        props: {
+            events,
+            yearNumber,
+            monthNumber
+        }
+    }
 }
 
 export default FilteredEventsPage;
